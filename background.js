@@ -1,3 +1,4 @@
+/* empty service-worker – keeps the extension awake for runtime messages */
 chrome.runtime.onInstalled.addListener(() => {
-  console.log("Gmail AI Classifier Extension Installed");
+  console.log("[AI-Ext] installed");
 });

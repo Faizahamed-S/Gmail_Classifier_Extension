@@ -1,16 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Gmail AI Classifier",
-  "version": "1.0",
-  "description": "Classifies Gmail emails using AI and shows the label in Gmail UI.",
+  "name": "Gmail-AI Classifier",
+  "version": "1.0.0",
+  "description": "Adds AI labels to Gmail rows and shows live counts in the popup.",
   "permissions": [
-      "scripting",
-  "activeTab",
-  "storage"
+    "activeTab",
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "https://mail.google.com/*",
-  "https://0ef2a5c0-404a-44c0-984c-6234fb809245-00-pmmlq4lg7syr.riker.replit.dev/*"
+    "https://0ef2a5c0-404a-44c0-984c-6234fb809245-00-pmmlq4lg7syr.riker.replit.dev/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -18,14 +18,14 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["openai.js", "content.js"] 
+      "js": ["openai.js", "content.js"]
     }
   ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icon.png",
-      "48": "icon.png",
+      "16":  "icon.png",
+      "48":  "icon.png",
       "128": "icon.png"
     }
   }
