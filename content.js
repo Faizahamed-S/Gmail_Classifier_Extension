@@ -1,49 +1,73 @@
+// ─── Inject Gmail-style pill badge CSS ─────────────────────────────────────────
+(function addAIBadgeStyles() {
+  if (document.getElementById("ai-badge-style")) return; // already added
+  const style = document.createElement("style");
+  style.id = "ai-badge-style";
+  style.textContent = `
+    .ai-badge{
+      display:inline-block;
+      padding:2px 6px;
+      margin-left:8px;
+      font-size:11px;
+      font-weight:500;
+      border-radius:12px;
+      color:#fff;
+      user-select:none;
+    }
+    .ai-applied       { background:#1a73e8; }  /* blue   */
+    .ai-next-round    { background:#ff8c00; }  /* orange */
+    .ai-interview     { background:#34a853; }  /* green  */
+    .ai-job           { background:#a142f4; }  /* purple */
+    .ai-rejection     { background:#ea4335; }  /* red    */
+    .ai-not-important { background:#5f6368; }  /* gray   */
+    .ai-error         { background:#9aa0a6; }
+    .ai-loading       { background:#5f6368; opacity:0.6; }
+  `;
+  document.head.appendChild(style);
+})();
+
+// ─── Main loop: attach / update labels ─────────────────────────────────────────
 async function insertLabel() {
-  const emailItems = document.querySelectorAll("div[role='main'] .zA");
+  const rows = document.querySelectorAll("div[role='main'] .zA");
 
-  emailItems.forEach(async (item) => {
-    if (!item.querySelector('.ai-label')) {
-      const preview = item.querySelector(".y6")?.innerText || "";
-      const label = document.createElement("span");
-      label.textContent = "🔍 Classifying...";
-      label.className = "ai-label";
-      label.style.marginLeft = "10px";
-      label.style.color = "blue";
-      label.style.fontSize = "12px";
-      item.querySelector(".y6")?.appendChild(label);
+  rows.forEach(async row => {
+    // skip if already labeled
+    if (row.querySelector(".ai-badge")) return;
 
-      try {
-        const result = await classifyEmailWithAI(preview);
+    const preview = row.querySelector(".y6")?.innerText || "";
+    const badge   = document.createElement("span");
+    badge.className = "ai-badge ai-loading";
+    badge.textContent = "Classifying…";
+    row.querySelector(".y6")?.append(badge);
 
-        if (!result || typeof result !== "string") {
-          label.textContent = "⚠️ Failed";
-          label.style.color = "gray";
-          return;
-        }
+    try {
+      const category = await classifyEmailWithAI(preview);
 
-        label.textContent = `📌 ${result}`;
-        label.style.color = getColor(result);
-      } catch (e) {
-        label.textContent = "⚠️ Error";
-        label.style.color = "gray";
-        console.error("AI Classification Error:", e);
-      }
+      if (!category) throw new Error("empty");
+
+      // map category → [class,text]
+      const map = {
+        "applied":        ["ai-applied","Applied"],
+        "next round":     ["ai-next-round","Next Round"],
+        "interview/meet": ["ai-interview","Interview/Meet"],
+        "job notification":["ai-job","Job Notification"],
+        "rejection":      ["ai-rejection","Rejection"],
+        "not important":  ["ai-not-important","Not Important"]
+      };
+
+      const key = category.toLowerCase();
+      const [cls,text] = map[key] || ["ai-error",category];
+
+      badge.className = `ai-badge ${cls}`;
+      badge.textContent = text;
+
+    } catch (err) {
+      badge.className = "ai-badge ai-error";
+      badge.textContent = "Error";
+      console.error("AI Classification Error:", err);
     }
   });
 }
 
-// Category colors
-function getColor(category) {
-  switch (category.toLowerCase()) {
-    case "applied": return "blue";
-    case "next round": return "orange";
-    case "interview/meet": return "green";
-    case "job notification": return "purple";
-    case "rejection": return "red";
-    case "not important": return "gray";
-    default: return "black";
-  }
-}
-
-// Run every 3 seconds
+// run every 3 s to catch new/loaded rows
 setInterval(insertLabel, 3000);
