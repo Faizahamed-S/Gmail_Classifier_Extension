@@ -4,13 +4,13 @@
   "version": "1.0",
   "description": "Classifies Gmail emails using AI and shows the label in Gmail UI.",
   "permissions": [
-    "scripting",
-    "activeTab",
-    "identity",
-    "storage"
+      "scripting",
+  "activeTab",
+  "storage"
   ],
   "host_permissions": [
-    "https://mail.google.com/*"
+    "https://mail.google.com/*",
+  "https://0ef2a5c0-404a-44c0-984c-6234fb809245-00-pmmlq4lg7syr.riker.replit.dev/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["content.js"]
+      "js": ["openai.js", "content.js"] 
     }
   ],
   "action": {
