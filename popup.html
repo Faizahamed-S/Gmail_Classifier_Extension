@@ -2,24 +2,22 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Gmail-AI Counts</title>
+  <title>Gmail-AI Dashboard</title>
   <style>
-    body{font-family:Arial,Helvetica,sans-serif;margin:12px;width:260px}
-    h3  {margin:4px 0 12px;font-size:16px}
+    body{font-family:Arial,Helvetica,sans-serif;margin:12px;width:250px}
+    h3{margin:4px 0 12px;font-size:16px}
     #counts div{margin:2px 0}
     .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
-    .applied{background:#1a73e8}.next{background:#ff8c00}
-    .interview{background:#34a853}.job{background:#a142f4}
-    .rejection{background:#ea4335}.notimp{background:#5f6368}
+    .applied{background:#1a73e8}.next{background:#ff8c00}.interview{background:#34a853}
+    .job{background:#a142f4}.rejection{background:#ea4335}.notimp{background:#5f6368}
   </style>
 </head>
 <body>
   <h3>Gmail-AI Counts</h3>
   <div id="counts">Loading…</div>
   <canvas id="chart" height="180"></canvas>
-
-  <!-- Chart.js: **bundle the minified UMD build with your extension** -->
   <script src="chart.umd.min.js"></script>
-  <script src="popup.js"></script>
+  <!-- ES-module popup -->
+  <script type="module" src="popup.js"></script>
 </body>
 </html>

@@ -61,7 +61,9 @@ async function classifyRow(row){
       ?.appendChild(pill);
 
   const mid = row.getAttribute("data-legacy-message-id") ||
-              row.getAttribute("data-message-id");
+              row.getAttribute("data-message-id")||         
+        row.getAttribute("data-thread-id")        ||          
+        (Date.now() + Math.random().toString(36));  
 
   try{
     const cat       = await classifyEmailWithAI(subject) || "";
