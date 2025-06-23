@@ -22,3 +22,7 @@ This Chrome Extension connects to Gmail, reads visible emails, and classifies th
 3. Enable Developer Mode
 4. Load unpacked → Select project folder
 5. Visit Gmail and watch labels appear!
+
+---
+### Output
+
