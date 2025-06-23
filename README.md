@@ -2,12 +2,12 @@
 
 This Chrome Extension connects to Gmail, reads visible emails, and classifies them using AI (to be added). It displays labels directly inside Gmail’s UI.
 
-### Features
+## Features
 
 - Injects classification labels
 - Future support for OpenAI/Claude classification
 
-### To Do
+## To Do
 
 - Connect Gmail API
 - Integrate AI model
@@ -15,7 +15,7 @@ This Chrome Extension connects to Gmail, reads visible emails, and classifies th
 
 ---
 
-### Setup Instructions
+## Setup Instructions
 
 1. Clone the repo
 2. Go to `chrome://extensions/`
@@ -24,5 +24,8 @@ This Chrome Extension connects to Gmail, reads visible emails, and classifies th
 5. Visit Gmail and watch labels appear!
 
 ---
-### Output
-
+## Output
+### Email Classification:
+![Home Page Screenshot](Images/Gmail.png)
+### Email Classification with Dashboard (Early Glance)
+![Home Page Screenshot](Images/Dashboard.png)
